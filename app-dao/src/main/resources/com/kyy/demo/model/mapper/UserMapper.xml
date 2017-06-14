@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kyy.demo.model.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.kyy.demo.model.User" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="AGE" property="age" jdbcType="DECIMAL" />
+    <result column="ACCOUNT" property="account" jdbcType="VARCHAR" />
+    <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from T_USER
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.kyy.demo.model.User" >
+    insert into T_USER (ID, NAME, AGE, 
+      ACCOUNT, PASSWORD)
+    values (#{id,jdbcType=DECIMAL}, #{name,jdbcType=VARCHAR}, #{age,jdbcType=DECIMAL}, 
+      #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.kyy.demo.model.User" >
+    update T_USER
+    set NAME = #{name,jdbcType=VARCHAR},
+      AGE = #{age,jdbcType=DECIMAL},
+      ACCOUNT = #{account,jdbcType=VARCHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select ID, NAME, AGE, ACCOUNT, PASSWORD
+    from T_USER
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select ID, NAME, AGE, ACCOUNT, PASSWORD
+    from T_USER
+  </select>
+  <sql id="pagePrefix" >
+    select ID, NAME, AGE, ACCOUNT, PASSWORD from (select ID, NAME, AGE, ACCOUNT, PASSWORD, ROWNUM RN from (
+  </sql>
+  <sql id="pageSuffix" >
+    <![CDATA[) where ROWNUM <= #{page.end,jdbcType=DECIMAL}) where RN >= #{page.begin,jdbcType=DECIMAL}]]>
+  </sql>
+  <select id="selectList" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    <if test="page != null" >
+      <include refid="pagePrefix" />
+    </if>
+    select ID, NAME, AGE, ACCOUNT, PASSWORD from T_USER
+    <if test="page != null" >
+      <include refid="pageSuffix" />
+    </if>
+    <if test="order != null" >
+      order by ${order}
+    </if>
+  </select>
+  <select id="selectCount" resultType="java.lang.Long" >
+    select count(1) from t_user
+  </select>
+  <select id="selectSequenceNextVal" resultType="java.lang.Long" >
+    select sequence_user_id.nextval from dual
+  </select>
+</mapper>

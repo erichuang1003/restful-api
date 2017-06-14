@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kyy.demo.model.mapper.RoleMapper" >
+  <resultMap id="BaseResultMap" type="com.kyy.demo.model.Role" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from T_ROLE
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.kyy.demo.model.Role" >
+    insert into T_ROLE (ID, NAME)
+    values (#{id,jdbcType=DECIMAL}, #{name,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.kyy.demo.model.Role" >
+    update T_ROLE
+    set NAME = #{name,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select ID, NAME
+    from T_ROLE
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select ID, NAME
+    from T_ROLE
+  </select>
+  <sql id="pagePrefix" >
+    select ID, NAME from (select ID, NAME, ROWNUM RN from (
+  </sql>
+  <sql id="pageSuffix" >
+    <![CDATA[) where ROWNUM <= #{page.end,jdbcType=DECIMAL}) where RN >= #{page.begin,jdbcType=DECIMAL}]]>
+  </sql>
+  <select id="selectList" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    <if test="page != null" >
+      <include refid="pagePrefix" />
+    </if>
+    select ID, NAME from T_ROLE
+    <if test="page != null" >
+      <include refid="pageSuffix" />
+    </if>
+    <if test="order != null" >
+      order by ${order}
+    </if>
+  </select>
+  <select id="selectCount" resultType="java.lang.Long" >
+    select count(1) from t_role
+  </select>
+  <select id="selectSequenceNextVal" resultType="java.lang.Long" >
+    select sequence_role_id.nextval from dual
+  </select>
+</mapper>

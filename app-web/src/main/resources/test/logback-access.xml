@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+<configuration>
+
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%A %a %t{yyyy-MM-dd.HH:mm:ss.SSS} %m %U %s %D</pattern>
+		</encoder>
+	</appender>
+	<appender name="logstash"
+		class="net.logstash.logback.appender.LogstashAccessTcpSocketAppender">
+		<destination>127.0.0.1:4560</destination>
+		<encoder
+			class="net.logstash.logback.encoder.AccessEventCompositeJsonEncoder">
+			<providers>
+				<pattern>
+					<pattern><![CDATA[{"timestamp":"%t{yyyy-MM-dd HH:mm:ss.SSSZ}","remote_host":"%a","local_host":"%A","method":"%m","uri":"%U","status":"%s","time":"%D"}]]></pattern>
+				</pattern>
+			</providers>
+		</encoder>
+	</appender>
+
+	<appender-ref ref="logstash" />
+	<appender-ref ref="stdout" />
+</configuration>

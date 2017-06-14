@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kyy.demo.model.mapper.custom.UserMapper" >
+  <select id="authorize" resultType="java.lang.Long" parameterType="com.kyy.demo.model.User">
+    select ID from T_USER where account=#{account,jdbcType=VARCHAR} and password=#{password,jdbcType=VARCHAR}
+  </select>
+</mapper>

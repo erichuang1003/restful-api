@@ -1,0 +1,12 @@
+document.write('<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">');
+document.write('<link rel="stylesheet" href="assets/bootstrap-table/bootstrap-table.min.css">');
+document.write('<link rel="stylesheet" href="assets/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css">');
+document.write('<link rel="stylesheet" href="css/style.css">');
+document.write('<script src="assets/jquery/jquery.min.js"></script>');
+document.write('<script src="assets/bootstrap/js/bootstrap.min.js"></script>');
+document.write('<script src="assets/bootstrap-table/bootstrap-table.min.js"></script>');
+document.write('<script src="assets/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>');
+document.write('<script src="assets/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>');
+document.write('<script src="assets/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>');
+document.write('<script src="js/util.js"></script>');
+document.write('<script src="js/rest-table.js"></script>');
